@@ -35,7 +35,7 @@ def display_employee_progress(employee_name,
                               total_tasks,
                               completed_tasks):
     print(
-        "Employee {} is done with tasks({}/{})"
+        "Employee {} is done with tasks({}/{}):"
         .format(employee_name, num_completed_tasks, total_tasks)
     )
     for task in completed_tasks:
