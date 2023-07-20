@@ -42,10 +42,9 @@ def display_employee_progress(employee_name,
     for task in completed_tasks:
         print("\t", task)
 
-def write_tasks_to_csv(employee_id, employee_name, tasks):
-    file_name = f"USER_ID.csv"
-    with open(file_name, mode="w", newline="") as file:
-        writer = csv.writer(file)
+def write_tasks_to_csv(employee_id, employee_name, tasks): 
+    with open(f"{employee_id}.csv", "w") as file:
+        writer = csv.writer(file, quoting=csv.QUOTEALL)
         writer.writerow(["USER_ID",
                          "USERNAME",
                          "TASK_COMPLETED_STATUS",
@@ -56,11 +55,6 @@ def write_tasks_to_csv(employee_id, employee_name, tasks):
 
 if __name__ == "__main__":
     import sys
-
-    if len(sys.argv) != 2:
-        print("Usage: python script.py <employee_id>")
-        sys.exit(1)
-
     employee_id = int(sys.argv[1])
     name, _, _, tasks = get_employee_info(employee_id)
     write_tasks_to_csv(employee_id, name, tasks)
