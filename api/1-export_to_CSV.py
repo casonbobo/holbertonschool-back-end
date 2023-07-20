@@ -4,6 +4,7 @@ API set up to retrieve data from a url
 """
 import requests
 import csv
+import sys
 
 API_URL = "https://jsonplaceholder.typicode.com/users"
 TODOS_URL = "https://jsonplaceholder.typicode.com/todos"
@@ -42,19 +43,14 @@ def display_employee_progress(employee_name,
     for task in completed_tasks:
         print("\t", task)
 
-def write_tasks_to_csv(employee_id, employee_name, tasks): 
+def write_tasks_to_csv(employee_id, employee_name, tasks):
     with open(f"{employee_id}.csv", "w") as file:
-        writer = csv.writer(file, quoting=csv.QUOTEALL)
-        writer.writerow(["USER_ID",
-                         "USERNAME",
-                         "TASK_COMPLETED_STATUS",
-                         "TASK_TITLE"])
+        writer = csv.writer(file, quoting=csv.QUOTE_ALL)
         for task in tasks:
             writer.writerow([employee_id, employee_name, "Completed", task])
 
 
 if __name__ == "__main__":
-    import sys
     employee_id = int(sys.argv[1])
     name, _, _, tasks = get_employee_info(employee_id)
     write_tasks_to_csv(employee_id, name, tasks)
