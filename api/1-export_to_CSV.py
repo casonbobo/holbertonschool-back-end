@@ -3,6 +3,7 @@
 API set up to retrieve data from a url
 """
 import requests
+import csv
 
 API_URL = "https://jsonplaceholder.typicode.com/users"
 TODOS_URL = "https://jsonplaceholder.typicode.com/todos"
@@ -41,6 +42,14 @@ def display_employee_progress(employee_name,
     for task in completed_tasks:
         print("\t", task)
 
+def write_tasks_to_csv(employee_id, employee_name, tasks):
+    file_name = f"{employee_id}.csv"
+    with open(file_name, mode="w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
+        for task in tasks:
+            writer.writerow([employee_id, employee_name, "Completed", task])
+
 
 if __name__ == "__main__":
     import sys
@@ -52,6 +61,6 @@ if __name__ == "__main__":
     employee_id = int(sys.argv[1])
     try:
         name, completed, total, tasks = get_employee_info(employee_id)
-        display_employee_progress(name, completed, total, tasks)
+        write_tasks_to_csv(employee_id, name, completed, total)
     except requests.exceptions.RequestException:
         print("Error: Unable to fetch data from the API.")
